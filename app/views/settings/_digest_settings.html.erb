@@ -7,7 +7,7 @@
 </div>
 <p>
 	<%= content_tag(:label, l(:label_digest_default_account_enabled)) %>
-	<%= check_box_tag "settings[default_account_enabled]", 1, @settings['default_account_enabled'] %> 
+  <%= select_tag "settings[default_account_enabled]", options_for_select([["yes", 1], ["no", 0]]) %>
 	<%= l(:label_active) %><br />
 </p>
 
