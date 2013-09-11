@@ -50,6 +50,8 @@ namespace :redmine do
 		options[:days] = env['days'].to_i if (env['days'] || args[:days])
 		options[:debugging_messages] = env['debugging_messages'].to_i if (env['debugging_messages'] || args[:debugging_messages])
 
+    User.current = User.find_by_mail('radu@dreamcodelabs.com')
+
 		DigestMailer.digests(options)
 		puts "Digest done."
 	end
