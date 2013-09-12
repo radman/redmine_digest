@@ -29,45 +29,23 @@ today    : <%= Time.now.to_date %>
 </pre>
 <% end -%>
 
-<h1>Activity <span style="font-weight:normal;">(
-<%= @date_from == @date_to-1? 
-	format_date(@date_from) : 
-	l(:label_date_from_to, :start => format_date(@date_from), :end => format_date(@date_to-1)).downcase -%>)</span></h1>
-	
-<p><%= link_to l(:label_activity_view_all), url_for(:controller => 'activities', :action => 'index', :only_path => false) %></p>
 <% if @events_by_day.blank? -%>
 <p><%= l(:label_no_data) %></p>
 <% else -%>
 <div id="activity">
-<ul>
 <% @events_by_day.keys.sort.each do |day| %>
-<li>
-<h3>
-<%= format_date(day) unless day.nil? -%>
-<%= Unknown date if day.nil? -%>
-</h3>
-<dl>
 <% @events_by_day[day].sort {|x,y| x.event_datetime <=> y.event_datetime }.each do |e| -%>
 <div class="event">
-  <dt class="<%= e.event_type %>">
-	<%#= avatar(e.event_author, :size => "24") if e.respond_to?(:event_author) %>
-  <span class="time"><%= format_time(e.event_datetime, false) %></span>
-  <%#= content_tag('span', h(e.project), :class => 'project') if @project.nil? || @project != e.project %>
-  <%= link_to format_activity_title(e.event_title), e.event_url({:only_path => false}) %>
-  <span class="author"><%= e.event_author if e.respond_to?(:event_author) %></span>
-  </dt>
-  <dd>
-  <div class="wiki">
-  <span class="description"><%#= format_activity_description(e.event_description) %>
-  <%= textilizable e.event_description %></span>
-  </div>
-  </dd>
+  <p>
+    <%= link_to format_activity_title(e.event_title), e.event_url({:only_path => false}) %>
+
+    <div class="wiki">
+      <span class="description"><%= textilizable e.event_description %></span>
+    </div>
+  </p>
 </div>
 <% end -%>
-</dl>
-</li>
 <% end -%>
-</ul>
 </div>
 
 <p><%= link_to(

@@ -43,6 +43,7 @@ class DigestMailer < Mailer
 			@events = body[:events]
 			@events_by_day = body[:events_by_day]
 			@params = @body[:params]
+
 			mail(:from => from, :to => recip_emails,
 				 :subject => subject)
 		else
