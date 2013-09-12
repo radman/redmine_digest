@@ -24,11 +24,16 @@ class DigestMailer < Mailer
 
 	def digest(project, recip_emails, body, days)
 		if Rails::VERSION::MAJOR >= 3
-			if l(:this_is_gloc_lib) == 'this_is_gloc_lib'
-				subject = l(:mail_subject_digest, issues.size, days)
-			else
-				subject = l(:mail_subject_digest, :project => project, :count => body[:events].size, :days => days )
-			end
+			#if l(:this_is_gloc_lib) == 'this_is_gloc_lib'
+			#	subject = l(:mail_subject_digest, issues.size, days)
+			#else
+			#	subject = l(:mail_subject_digest, :project => project, :count => body[:events].size, :days => days )
+			#end
+      #
+      from = "radu@dreamcodelabs.com"
+      company = "Dreamcode Labs"
+      subject = "[#{company}] Daily summary for #{project.name}"
+
 			@body = body
 			@date_from =body[:date_from]
 			@date_to = body[:date_to]
@@ -38,7 +43,7 @@ class DigestMailer < Mailer
 			@events = body[:events]
 			@events_by_day = body[:events_by_day]
 			@params = @body[:params]
-			mail(:to => recip_emails,
+			mail(:from => from, :to => recip_emails,
 				 :subject => subject)
 		else
 			recipients recip_emails
